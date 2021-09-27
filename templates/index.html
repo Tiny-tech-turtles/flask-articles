@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <h1>トピックス一覧</h1>
+        <form method="GET" action="/">
+            <button type="submit" class="btn btn-secondary">
+                更新
+            </button>
+        </form>
+    </div>
+</nav>
+<div class="row" id="articles">
+    {% set start = namespace(cnt = 0) %}
+    {% set end = namespace(cnt = 8) %}
+    {% for category_name in category_names %}
+    <div class="col-6">
+        <div class="card" style="margin-top: 20px;">
+            <div class="card-header">
+                <h3>
+                    <a href="{{category_links[loop.index-1]}}" target="_blank">
+                        {{category_name}}
+                    </a>
+                </h3>
+            </div>
+            {% for index in range(start.cnt, end.cnt) %}
+            <ul>
+                <li>
+                    <a href="{{article_links[index]}}" target="_blank">
+                        {{article_names[index]}}
+                    </a>
+                </li>
+            </ul>
+            {% endfor %}
+            {% set start.cnt = start.cnt+8 %}
+            {% set end.cnt = end.cnt+8 %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
